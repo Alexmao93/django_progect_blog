@@ -34,7 +34,18 @@ class PostByCategory(ListView):
 
 
 class PostByTag(ListView):
-    pass
+    template_name = 'main_page/main_page.html'
+    context_object_name = 'posts'
+    paginate_by = 4
+    allow_empty = False
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs['slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Записи по тегу: ' + str(Tag.objects.get(slug=self.kwargs['slug']))
+        return context
 
 
 class GetPost(DetailView):
@@ -48,3 +59,18 @@ class GetPost(DetailView):
         self.object.save()
         self.object.refresh_from_db()  # перезапрос информации с базы данных
         return context
+
+
+class Search(ListView):
+    template_name = 'main_page/search.html'
+    context_object_name = 'posts'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Post.objects.filter(title__icontains=self.request.GET.get('s'))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['s'] = f's={self.request.GET.get("s")}&'
+        return context
+

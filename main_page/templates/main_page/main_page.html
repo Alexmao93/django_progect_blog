@@ -46,7 +46,7 @@
                                     <h4><span>Posted By: <span class="author-name">{{ post.author }}</span></span></h4>
                                     <!--обрезка поста до 20 символов и фильтр safe чтобы срабатывал html код-->
                                     {{ post.content|truncatewords_html:20|safe }}
-                                    <h4><span>{{ post.created_at|date:'d.m.Y'  }}</span></h4>
+                                    <h4><span>{{ post.created_at|date:'d.m.Y' }}</span></h4>
                                 </div>
                             </div>
                             {% endfor %}
