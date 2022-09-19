@@ -1,7 +1,8 @@
 from django import template
-from main_page.models import Category
+from main_page.models import Category, Post
 
 register = template.Library()
+
 
 @register.inclusion_tag('main_page/menu_tpl.html')
 def show_menu(menu_class='menu'):

@@ -73,4 +73,3 @@ class Search(ListView):
         context = super().get_context_data(**kwargs)
         context['s'] = f's={self.request.GET.get("s")}&'
         return context
-
